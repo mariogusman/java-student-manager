@@ -1,7 +1,5 @@
 package ie.atu.sw;
 
-import java.util.Iterator;
-
 public class StudentManager {
 	private static final int INITIAL_CAPACITY = 10; // sets an initial size for the array
 	private Student[] student = null;
@@ -14,10 +12,27 @@ public class StudentManager {
 		for (int i = 0; i < student.length; i++) {
 			if (student[i] == null) {
 				student[i] = s;
+				return;
 			}
 		}
+		
+		int index = getExpandedIndex();
+		student[index] = s;
+		
 	}
 
+	private int getExpandedIndex() {
+		Student[] temp = new Student[student.length * 2];
+		for (int i = 0; i < student.length; i++) {
+			temp[i] = student[i];
+		}
+		
+		
+		int index = student.length;
+		student = temp;
+		return index;
+	}
+	
 	public boolean delete(String sid) {
 		for (int i = 0; i < student.length; i++) {
 			if (student[i] != null && student[i].firstName().equals(sid)) {
@@ -66,6 +81,7 @@ public class StudentManager {
 				total++;
 			}
 		}
+		return total;
 	}
 
 }
